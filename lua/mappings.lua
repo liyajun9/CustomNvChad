@@ -5,7 +5,7 @@ require "nvchad.mappings"
 local map = vim.keymap.set
 local unmap = vim.keymap.del
 
-map("n", ";", ":", { desc = "CMD enter command mode" })
+-- map("n", ";", ":", { desc = "CMD enter command mode" })
 map("i", "jk", "<ESC>")
 
 -- map({ "n", "i", "v" }, "<C-s>", "<cmd> w <cr>")
@@ -23,3 +23,13 @@ map("n", "<C-/>", "gcc", { desc = "Toggle Comment", remap = true})
 map("n", "<C-_>", "gcc", { desc = "Toggle Comment", remap = true})
 map("v", "<C-/>", "gc", { desc = "Toggle Comment", remap = true})
 map("v", "<C-_>", "gc", { desc = "Toggle Comment", remap = true})
+
+-- auto copy to system clipboard while selection
+--[[
+vim.api.nvim_create_autocmd("ModeChanged", {
+  pattern = "v:*",
+  callback = function()
+    vim.keymap.set("v", "<Esc>", "<cmd>normal! y<cr><Esc>", { silent = true, noremap = true })
+  end,
+})
+--]]

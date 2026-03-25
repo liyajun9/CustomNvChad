@@ -15,5 +15,6 @@ opt.mouse = "a"
 opt.clipboard = "unnamedplus"
 opt.selection = "exclusive"
 
+opt.scrolloff = 8
 -- local o = vim.o
 -- o.cursorlineopt ='both' -- to enable cursorline!

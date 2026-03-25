@@ -17,3 +17,8 @@ vim.api.nvim_create_autocmd("FileType", {
 end,
 })
 
+vim.api.nvim_create_autocmd({ "VimEnter", "WinEnter", "BufWinEnter", "WinResized" }, {
+  callback = function()
+    vim.opt_local.scroll = 3
+  end,
+})

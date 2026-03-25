@@ -21,11 +21,11 @@ return {
     },
   },
 
-  {
-    "akinsho/toggleterm.nvim",
-    version = "*",
-    opts = require("configs.toggleterm"),
-  },
+  --{
+    --"akinsho/toggleterm.nvim",
+    --version = "*",
+    --opts = require("configs.toggleterm"),
+  --},
 
   {
     "zbirenbaum/copilot.lua",

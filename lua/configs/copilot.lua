@@ -3,7 +3,8 @@ return {
     enabled = true,
     auto_trigger = true,
     keymap = {
-      accept = "<Tab>",
+      --accept = "<Tab>",
+      accept = "<M-l>",
       --dismiss = "<C-]>",
       dismiss = "<C-c>",
       next = "<M-]>",

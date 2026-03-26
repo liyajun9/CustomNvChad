@@ -21,18 +21,30 @@ return {
     },
   },
 
-  --{
-    --"akinsho/toggleterm.nvim",
-    --version = "*",
-    --opts = require("configs.toggleterm"),
-  --},
-
   {
     "zbirenbaum/copilot.lua",
     cmd = "Copilot",
     event = "InsertEnter",
     opts = require("configs.copilot"),
   },
+
+  {
+    "nvim-treesitter/nvim-treesitter",
+    opts = function(_, opts)
+      return require("configs.treesitter").setup(opts)
+    end,
+  },
+
+  {
+    "nvim-treesitter/nvim-treesitter-textobjects",
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
+  },
+
+  --{
+    --"akinsho/toggleterm.nvim",
+    --version = "*",
+    --opts = require("configs.toggleterm"),
+  --},
 
   -- test new blink
   -- { import = "nvchad.blink.lazyspec" },

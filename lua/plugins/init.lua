@@ -29,6 +29,12 @@ return {
   },
 
   {
+    "rmagatti/auto-session",
+    event = "VimEnter",
+    opts = require("configs.session"),
+  },
+
+  {
     "nvim-treesitter/nvim-treesitter",
     opts = function(_, opts)
       return require("configs.treesitter").setup(opts)

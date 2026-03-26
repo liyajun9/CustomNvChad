@@ -3,8 +3,7 @@ return {
     enabled = true,
     auto_trigger = true,
     keymap = {
-      --accept = "<Tab>",
-      accept = "<M-l>",
+      accept = "<leader><leader>",
       --dismiss = "<C-]>",
       dismiss = "<C-c>",
       next = "<M-]>",
@@ -15,7 +14,7 @@ return {
     enabled = true,
     auto_refresh = false,
     keymap = {
-      open = "<M-CR>",  -- Alt+Enter to open the panel
+      open = "<M-p>",
     },
   },
   filetypes = {

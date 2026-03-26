@@ -23,6 +23,7 @@ map("n", "<C-/>", "gcc", { desc = "Toggle Comment", remap = true})
 map("n", "<C-_>", "gcc", { desc = "Toggle Comment", remap = true})
 map("v", "<C-/>", "gc", { desc = "Toggle Comment", remap = true})
 map("v", "<C-_>", "gc", { desc = "Toggle Comment", remap = true})
+map("n", "<leader>cp", "<cmd>Copilot panel open<cr>", { desc = "Copilot panel" })
 
 -- auto copy to system clipboard while selection
 --[[

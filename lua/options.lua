@@ -25,3 +25,4 @@ opt.foldlevel = 99
 opt.foldenable = true
 opt.foldlevelstart = 99
 
+opt.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"

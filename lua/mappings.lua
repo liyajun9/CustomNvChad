@@ -24,6 +24,13 @@ map("n", "<C-_>", "gcc", { desc = "Toggle Comment", remap = true})
 map("v", "<C-/>", "gc", { desc = "Toggle Comment", remap = true})
 map("v", "<C-_>", "gc", { desc = "Toggle Comment", remap = true})
 map("n", "<leader>cp", "<cmd>Copilot panel open<cr>", { desc = "Copilot panel" })
+map("n", "<leader>cc", "<cmd>CopilotChatToggle<cr>", { desc = "CopilotChat toggle" })
+map("v", "<leader>cc", "<cmd>CopilotChat<cr>", { desc = "CopilotChat prompt selection" })
+map("v", "<leader>ce", "<cmd>CopilotChatExplain<cr>", { desc = "CopilotChat explain" })
+map("v", "<leader>cf", "<cmd>CopilotChatFix<cr>", { desc = "CopilotChat fix" })
+map("v", "<leader>co", "<cmd>CopilotChatOptimize<cr>", { desc = "CopilotChat optimize" })
+map("v", "<leader>cd", "<cmd>CopilotChatDocs<cr>", { desc = "CopilotChat docs" })
+map("v", "<leader>ct", "<cmd>CopilotChatTests<cr>", { desc = "CopilotChat tests" })
 
 -- auto copy to system clipboard while selection
 --[[

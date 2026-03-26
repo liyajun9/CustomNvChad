@@ -29,7 +29,31 @@ return {
   },
 
   {
+    "CopilotC-Nvim/CopilotChat.nvim",
+    branch = "main",
+    build = "make tiktoken",
+    cmd = {
+      "CopilotChat",
+      "CopilotChatOpen",
+      "CopilotChatClose",
+      "CopilotChatToggle",
+      "CopilotChatExplain",
+      "CopilotChatReview",
+      "CopilotChatFix",
+      "CopilotChatOptimize",
+      "CopilotChatDocs",
+      "CopilotChatTests",
+    },
+    dependencies = {
+      { "zbirenbaum/copilot.lua" },
+      { "nvim-lua/plenary.nvim" },
+    },
+    opts = require("configs.copilotchat"),
+  },
+
+  {
     "rmagatti/auto-session",
+    lazy = false,
     event = "VimEnter",
     opts = require("configs.session"),
   },

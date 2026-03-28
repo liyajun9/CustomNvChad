@@ -1,5 +1,20 @@
 require("nvchad.configs.lspconfig").defaults()
 
+vim.diagnostic.config({
+  virtual_text = false,
+  signs = true,
+  underline = true,
+  update_in_insert = false,
+  severity_sort = true,
+  float = {
+    border = "rounded",
+    source = "if_many",
+    focusable = false,
+    header = "",
+    prefix = "",
+  },
+})
+
 local servers = { "html", "cssls", "clangd", "cmake", "pyright", "lua_ls", "bashls", "marksman", "lemminx", "yamlls" }
 vim.lsp.enable(servers)
 

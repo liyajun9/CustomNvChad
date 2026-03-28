@@ -22,6 +22,11 @@ end,
 --解决ctrl-d,ctrl-u滚动步距随着窗口大小改变而改变的问题
 vim.api.nvim_create_autocmd({ "VimEnter", "WinEnter", "BufWinEnter", "WinResized" }, {
   callback = function()
+    local cfg = vim.api.nvim_win_get_config(0)
+    if cfg.relative ~= "" then
+      return
+    end
+
     vim.opt_local.scroll = 3
   end,
 })

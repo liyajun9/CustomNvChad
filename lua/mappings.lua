@@ -5,17 +5,19 @@ require "nvchad.mappings"
 local map = vim.keymap.set
 local unmap = vim.keymap.del
 
+map("n", "gl", vim.diagnostic.open_float, { desc = "Line Diagnostics" })
+
 -- map("n", ";", ":", { desc = "CMD enter command mode" })
 map("i", "jk", "<ESC>")
 
 -- map({ "n", "i", "v" }, "<C-s>", "<cmd> w <cr>")
 
-unmap("i", "<C-b>")
-unmap("n", "<C-s>")
-unmap("n", "<C-c>")
-unmap("n", "<leader>h")
-unmap("n", "<leader>v")
-unmap({ "n", "t" }, "<A-v>")
+pcall(unmap, "i", "<C-b>")
+pcall(unmap, "n", "<C-s>")
+pcall(unmap, "n", "<C-c>")
+pcall(unmap, "n", "<leader>h")
+pcall(unmap, "n", "<leader>v")
+pcall(unmap, { "n", "t" }, "<A-v>")
 
 map("i", "<C-a>", "<ESC>^i", { desc = "move beginning of line" })
 -- Comment toggle (Ctrl+/)

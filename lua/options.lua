@@ -14,6 +14,7 @@ opt.smartindent = true
 opt.mouse = "a"
 opt.clipboard = "unnamedplus"
 opt.selection = "exclusive"
+opt.showtabline = 2
 
 opt.scrolloff = 8
 -- local o = vim.o

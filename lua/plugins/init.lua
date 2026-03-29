@@ -14,6 +14,18 @@ return {
   },
 
   {
+    "hrsh7th/nvim-cmp",
+    opts = function()
+      return require "configs.cmp"
+    end,
+  },
+
+  {
+    "https://codeberg.org/FelipeLema/cmp-async-path.git",
+    enabled = false,
+  },
+
+  {
     "stevearc/aerial.nvim",
     opts = require("configs.aerial"),
     keys = {

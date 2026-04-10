@@ -15,6 +15,17 @@ vim.diagnostic.config({
   },
 })
 
+vim.lsp.config("clangd", {
+  cmd = {
+    "/opt/homebrew/opt/llvm@15/bin/clangd",
+    "--background-index",
+    "--clang-tidy",
+    "--completion-style=detailed",
+    "--header-insertion=never",
+  },
+})
+
+
 local servers = { "html", "cssls", "clangd", "cmake", "pyright", "lua_ls", "bashls", "marksman", "lemminx", "yamlls" }
 vim.lsp.enable(servers)
 

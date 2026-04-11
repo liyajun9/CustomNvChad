@@ -4,7 +4,8 @@ return {
     min_width = 28,
     max_width = 40,
     width = nil,
-    placement = "right", -- or "left", "edge", "float"
+    placement = "edge",
+    default_direction = "right",
   },
 
   -- 自动聚焦当前符号

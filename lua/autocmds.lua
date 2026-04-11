@@ -31,9 +31,17 @@ vim.api.nvim_create_autocmd({ "VimEnter", "WinEnter", "BufWinEnter", "WinResized
   end,
 })
 
---使用treesitter折叠
+-- 仅在 parser 可用时启用 treesitter 折叠，避免启动阶段 foldexpr 崩溃
 vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter", "WinEnter" }, {
   callback = function()
+    local bufnr = vim.api.nvim_get_current_buf()
+    local ok = pcall(vim.treesitter.get_parser, bufnr)
+    if not ok then
+      vim.wo.foldmethod = "manual"
+      vim.wo.foldexpr = "0"
+      return
+    end
+
     vim.wo.foldmethod = "expr"
     vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
     vim.wo.foldlevel = 99

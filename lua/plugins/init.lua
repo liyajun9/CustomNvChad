@@ -27,6 +27,7 @@ return {
 
   {
     "stevearc/aerial.nvim",
+    event = "BufReadPre",
     opts = require("configs.aerial"),
     keys = {
       { "<C-\\>", "<cmd>AerialToggle<cr>", desc = "Toggle Symbol Outline" },

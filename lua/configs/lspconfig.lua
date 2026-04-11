@@ -17,7 +17,7 @@ vim.diagnostic.config({
 
 vim.lsp.config("clangd", {
   cmd = {
-    "/opt/homebrew/opt/llvm@15/bin/clangd",
+    "/usr/local/opt/llvm@15/bin/clangd",
     "--background-index",
     "--clang-tidy",
     "--completion-style=detailed",

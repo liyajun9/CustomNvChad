@@ -2,6 +2,8 @@ require "nvchad.options"
 
 -- add yours here!
 local opt = vim.opt
+opt.encoding = "utf-8"
+opt.fileencodings = { "utf-8", "gbk", "gb2312", "gb18030", "ucs-bom", "cp936" }
 opt.expandtab = true
 opt.tabstop = 4
 opt.shiftwidth = 4

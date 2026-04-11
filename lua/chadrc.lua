@@ -20,6 +20,19 @@ M.ui = {
     enabled = true,
     lazyload = false,
   },
+  statusline = {
+    order = { "mode", "file", "git", "%=", "lsp_msg", "%=", "diagnostics", "lsp", "cwd", "encoding", "cursor" },
+    modules = {
+      encoding = function()
+        local fenc = vim.bo.fileencoding
+        if fenc == nil or fenc == "" then
+          fenc = vim.go.encoding
+        end
+
+        return (fenc and fenc ~= "") and (" " .. string.upper(fenc) .. " ") or ""
+      end,
+    },
+  },
 }
 
 return M

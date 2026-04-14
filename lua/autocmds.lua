@@ -1,5 +1,73 @@
 require "nvchad.autocmds"
 
+local function update_session_sidebar_state(force)
+  if vim.g.session_sidebar_state_frozen and not force then
+    return
+  end
+
+  local data = {
+    nvim_tree_open = false,
+  }
+
+  local ok_tree, nvim_tree = pcall(require, "nvim-tree.api")
+  if ok_tree then
+    data.nvim_tree_open = nvim_tree.tree.is_visible()
+  end
+
+  vim.g.session_sidebar_state = data
+end
+
+vim.api.nvim_create_autocmd("VimEnter", {
+  callback = function()
+    vim.g.session_sidebar_state_frozen = false
+  end,
+})
+
+vim.api.nvim_create_autocmd("VimEnter", {
+  callback = function()
+    vim.defer_fn(function()
+      if vim.g.SessionLoad then
+        return
+      end
+
+      local ok_as, auto_session = pcall(require, "auto-session")
+      local ok_lib, lib = pcall(require, "auto-session.lib")
+      if not ok_as or not ok_lib then
+        return
+      end
+
+      local function find_nearest_session_dir()
+        local dir = vim.fn.getcwd()
+        local root = vim.fs.root(dir, { ".git", "compile_commands.json", "CMakeLists.txt", "SConstruct" })
+        root = root or dir
+
+        while dir and dir ~= "" do
+          local session_path = auto_session.get_root_dir() .. lib.escape_session_name(dir) .. ".vim"
+          local readable = vim.fn.filereadable(session_path) == 1
+          if readable then
+            return dir
+          end
+          if dir == root then
+            break
+          end
+          local parent = vim.fn.fnamemodify(dir, ":h")
+          if parent == dir then
+            break
+          end
+          dir = parent
+        end
+      end
+
+      local restore_dir = find_nearest_session_dir()
+      if vim.fn.argc() > 0 and restore_dir then
+        pcall(function()
+          auto_session.restore_session(restore_dir)
+        end)
+      end
+    end, 100)
+  end,
+})
+
 --关闭lua文件的tab
 vim.api.nvim_create_autocmd("FileType", {
   pattern = { "lua" },
@@ -46,5 +114,18 @@ vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter", "WinEnter" }, {
     vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
     vim.wo.foldlevel = 99
     vim.wo.foldenable = true
+  end,
+})
+
+vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter", "WinEnter", "WinClosed" }, {
+  callback = function()
+    update_session_sidebar_state()
+  end,
+})
+
+vim.api.nvim_create_autocmd("VimLeavePre", {
+  callback = function()
+    update_session_sidebar_state(true)
+    vim.g.session_sidebar_state_frozen = true
   end,
 })

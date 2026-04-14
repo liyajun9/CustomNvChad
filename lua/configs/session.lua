@@ -2,7 +2,8 @@ return {
   auto_restore = true,
   auto_save = true,
   auto_restore_last_session = false,
-  close_unsupported_windows = false,
+  args_allow_files_auto_save = true,
+  close_unsupported_windows = true,
   git_use_branch_name = false,
   suppressed_dirs = {
     vim.fn.expand "~",
@@ -13,19 +14,11 @@ return {
     load_on_setup = false,
   },
   save_extra_data = function()
-    local data = {
-      nvim_tree_open = false,
-      aerial_open = false,
-    }
-
-    local ok_tree, nvim_tree = pcall(require, "nvim-tree.api")
-    if ok_tree then
-      data.nvim_tree_open = nvim_tree.tree.is_visible()
-    end
-
-    local ok_aerial, aerial = pcall(require, "aerial")
-    if ok_aerial then
-      data.aerial_open = aerial.is_open()
+    local data = vim.g.session_sidebar_state
+    if type(data) ~= "table" then
+      data = {
+        nvim_tree_open = false,
+      }
     end
 
     return vim.json.encode(data)
@@ -41,13 +34,6 @@ return {
         local ok_tree, nvim_tree = pcall(require, "nvim-tree.api")
         if ok_tree and not nvim_tree.tree.is_visible() then
           nvim_tree.tree.open()
-        end
-      end
-
-      if data.aerial_open then
-        local ok_aerial, aerial = pcall(require, "aerial")
-        if ok_aerial and not aerial.is_open() then
-          vim.cmd("AerialOpen right")
         end
       end
     end, 200)

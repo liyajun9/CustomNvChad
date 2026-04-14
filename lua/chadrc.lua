@@ -23,6 +23,15 @@ M.ui = {
   statusline = {
     order = { "mode", "file", "git", "symbol", "%=", "lsp_msg", "%=", "diagnostics", "lsp", "cwd", "encoding", "cursor" },
     modules = {
+      file = function()
+        local sep_r = require("nvconfig").ui.statusline.separator_style == "default" and "" or ""
+        local utils = require "nvchad.stl.utils"
+        local x = utils.file()
+        local path = vim.api.nvim_buf_get_name(0)
+        local name = path ~= "" and vim.fn.fnamemodify(path, ":p") or "Empty"
+
+        return "%#St_file# " .. x[1] .. " " .. name .. " %#St_file_sep#" .. sep_r
+      end,
       encoding = function()
         local fenc = vim.bo.fileencoding
         if fenc == nil or fenc == "" then

@@ -21,7 +21,7 @@ M.ui = {
     lazyload = false,
   },
   statusline = {
-    order = { "mode", "file", "git", "%=", "lsp_msg", "%=", "diagnostics", "lsp", "cwd", "encoding", "cursor" },
+    order = { "mode", "file", "git", "symbol", "%=", "lsp_msg", "%=", "diagnostics", "lsp", "cwd", "encoding", "cursor" },
     modules = {
       encoding = function()
         local fenc = vim.bo.fileencoding
@@ -30,6 +30,41 @@ M.ui = {
         end
 
         return (fenc and fenc ~= "") and (" " .. string.upper(fenc) .. " ") or ""
+      end,
+      symbol = function()
+        local ft = vim.bo.filetype
+        local enabled = {
+          c = true,
+          cpp = true,
+          python = true,
+        }
+
+        if not enabled[ft] then
+          return ""
+        end
+
+        local ok, aerial = pcall(require, "aerial")
+        if not ok then
+          return ""
+        end
+
+        local symbols = aerial.get_location(true)
+        if type(symbols) ~= "table" or vim.tbl_isempty(symbols) then
+          return ""
+        end
+
+        local names = {}
+        for _, symbol in ipairs(symbols) do
+          if symbol and symbol.name and symbol.name ~= "" then
+            table.insert(names, symbol.name)
+          end
+        end
+
+        if vim.tbl_isempty(names) then
+          return ""
+        end
+
+        return " [" .. table.concat(names, " > ") .. "]"
       end,
     },
   },

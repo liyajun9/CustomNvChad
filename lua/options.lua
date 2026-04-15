@@ -22,8 +22,10 @@ opt.scrolloff = 8
 -- local o = vim.o
 -- o.cursorlineopt ='both' -- to enable cursorline!
 
+opt.foldmethod = "manual"
+opt.foldexpr = "0"
 opt.foldlevel = 99
 opt.foldenable = true
 opt.foldlevelstart = 99
 
-opt.sessionoptions = "blank,buffers,curdir,folds,globals,help,tabpages,winsize,winpos,localoptions"
+opt.sessionoptions = "blank,buffers,curdir,globals,help,tabpages,winsize,winpos,localoptions"

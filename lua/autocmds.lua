@@ -23,6 +23,8 @@ local function update_session_sidebar_state(force)
   vim.g.session_sidebar_state = data
 end
 
+local session_launch_arg = vim.g.session_launch_arg or vim.fn.argv(0)
+
 vim.api.nvim_create_autocmd("VimEnter", {
   callback = function()
     vim.g.session_sidebar_state_frozen = false
@@ -42,13 +44,31 @@ vim.api.nvim_create_autocmd("VimEnter", {
         return
       end
 
-      local function find_nearest_session_dir()
-        local dir = vim.fn.getcwd()
+      local function get_session_start_dir()
+        if type(vim.g.session_launch_dir) == "string" and vim.g.session_launch_dir ~= "" then
+          return vim.g.session_launch_dir, true
+        end
+
+        local arg = session_launch_arg
+        if type(arg) == "string" and arg ~= "" and vim.fn.isdirectory(arg) == 1 then
+          return (vim.fn.fnamemodify(arg, ":p"):gsub("/$", "")), true
+        end
+
+        return vim.fn.getcwd(), false
+      end
+
+      local function find_nearest_session_dir(start_dir, exact_only)
+        local dir = start_dir
+        local session_path = auto_session.get_root_dir() .. lib.escape_session_name(dir) .. ".vim"
+        if exact_only then
+          return vim.fn.filereadable(session_path) == 1 and dir or nil
+        end
+
         local root = vim.fs.root(dir, { ".git", "compile_commands.json", "CMakeLists.txt", "SConstruct" })
         root = root or dir
 
         while dir and dir ~= "" do
-          local session_path = auto_session.get_root_dir() .. lib.escape_session_name(dir) .. ".vim"
+          session_path = auto_session.get_root_dir() .. lib.escape_session_name(dir) .. ".vim"
           local readable = vim.fn.filereadable(session_path) == 1
           if readable then
             return dir
@@ -64,7 +84,12 @@ vim.api.nvim_create_autocmd("VimEnter", {
         end
       end
 
-      local restore_dir = find_nearest_session_dir()
+      local start_dir, from_dir_arg = get_session_start_dir()
+      if from_dir_arg and start_dir ~= vim.fn.getcwd() then
+        vim.cmd("cd " .. vim.fn.fnameescape(start_dir))
+      end
+
+      local restore_dir = find_nearest_session_dir(start_dir, from_dir_arg)
       if vim.fn.argc() > 0 and restore_dir then
         pcall(function()
           auto_session.restore_session(restore_dir)

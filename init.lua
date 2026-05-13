@@ -1,5 +1,9 @@
 vim.g.base46_cache = vim.fn.stdpath "data" .. "/base46/"
 vim.g.mapleader = " "
+vim.g.session_launch_arg = vim.fn.argv(0)
+if type(vim.g.session_launch_arg) == "string" and vim.g.session_launch_arg ~= "" and vim.fn.isdirectory(vim.g.session_launch_arg) == 1 then
+  vim.g.session_launch_dir = vim.fn.fnamemodify(vim.g.session_launch_arg, ":p"):gsub("/$", "")
+end
 
 -- bootstrap lazy and all plugins
 local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
